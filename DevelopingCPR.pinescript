@@ -1,0 +1,26 @@
+//@version=3
+//
+// Developing Central Pivot Range (CPR) Indicator for TradingView
+// This script implements a developing version of Central Pivot Range described at http://pivotboss.com/2010/05/31/a-quick-guide-to-the-pivot-range
+// by Sherwin Daganato, 20171126
+// https://github.com/sherwind/pinescript-developing_cpr
+//
+// Inputs:
+//
+// Developing CPR resolution - Either D (Daily), W (Weekly), M (Monthly) or 12M (Yearly). The default value is M.
+//
+study(title="SD - Developing Central Pivot Range - Daily Weekly Monthly Yearly", shorttitle="[SD]Developing CPR", overlay=true)
+
+res = input(title="Developing CPR resolution", defval="M", options=["D", "W", "M", "12M"])
+
+pivot = (high + low + close) / 3.0
+bc = (high + low) / 2.0
+tc = (pivot - bc) + pivot
+
+dpp = security(tickerid, res, pivot, lookahead=barmerge.lookahead_on)
+dbc = security(tickerid, res, bc, lookahead=barmerge.lookahead_on)
+dtc = security(tickerid, res, tc, lookahead=barmerge.lookahead_on)
+
+plot(dpp, title="Developing PP", style=line, color=teal, linewidth=2)
+plot(dtc, title="Developing TC", style=line, color=teal, linewidth=2)
+plot(dbc, title="Developing BC", style=line, color=teal, linewidth=2)
