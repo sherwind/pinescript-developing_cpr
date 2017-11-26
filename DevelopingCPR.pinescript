@@ -17,10 +17,10 @@ pivot = (high + low + close) / 3.0
 bc = (high + low) / 2.0
 tc = (pivot - bc) + pivot
 
+dtc = security(tickerid, res, tc, lookahead=barmerge.lookahead_on)
 dpp = security(tickerid, res, pivot, lookahead=barmerge.lookahead_on)
 dbc = security(tickerid, res, bc, lookahead=barmerge.lookahead_on)
-dtc = security(tickerid, res, tc, lookahead=barmerge.lookahead_on)
 
+plot(dtc >= dbc ? dtc : dbc, title="Developing TC", style=line, color=teal, linewidth=2)
 plot(dpp, title="Developing PP", style=line, color=teal, linewidth=2)
-plot(dtc, title="Developing TC", style=line, color=teal, linewidth=2)
-plot(dbc, title="Developing BC", style=line, color=teal, linewidth=2)
+plot(dtc >= dbc ? dbc : dtc, title="Developing BC", style=line, color=teal, linewidth=2)
